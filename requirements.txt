@@ -1,14 +1,14 @@
+flask
+python-dotenv
 google-generativeai
 groq
-python-dotenv
-requests
+ddgs
 reportlab
 python-pptx
-ddgs
-beautifulsoup4
+flask-sqlalchemy
+psycopg2-binary
 markdown
-streamlit
-flask
-Flask-SQLAlchemy
-cohere
-huggingface_hub
+# Removed heavy libraries to fix Vercel limit
+# cohere 
+# huggingface_hub
+# beautifulsoup4 (ddgs handles it)

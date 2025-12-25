@@ -22,7 +22,12 @@ from pptx import Presentation
 app = Flask(__name__)
 
 # Database Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///reports.db'
+# Use DATABASE_URL from environment (Vercel/Cloud) or fallback to local SQLite
+database_url = os.getenv('DATABASE_URL', 'sqlite:///reports.db')
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

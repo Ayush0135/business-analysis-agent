@@ -3,20 +3,21 @@ import time
 from dotenv import load_dotenv
 import google.generativeai as genai
 from groq import Groq
-import cohere
-from huggingface_hub import InferenceClient
+# import cohere  <-- Commented out to save space
+# from huggingface_hub import InferenceClient <-- Commented out to save space
 
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-HF_TOKEN = os.getenv("HF_TOKEN")
+# COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+# HF_TOKEN = os.getenv("HF_TOKEN")
 
 def call_llm(prompt, system_instruction=None, model_type="groq"):
     """
     Calls various LLMs with a robust fallback mechanism.
-    Order: Groq -> Gemini -> Cohere -> Hugging Face
+    Order: Groq -> Gemini
+    (Cohere and HF removed for Vercel size limits)
     """
     context = ""
     if system_instruction:
@@ -45,31 +46,5 @@ def call_llm(prompt, system_instruction=None, model_type="groq"):
             return response.text
         except Exception as e:
             print(f"⚠️ Gemini Failed: {e}")
-
-    # 3. Fallback to Cohere
-    if COHERE_API_KEY:
-        try:
-            co = cohere.Client(COHERE_API_KEY)
-            response = co.chat(
-                message=full_prompt,
-                model="command-r-plus" 
-            )
-            return response.text
-        except Exception as e:
-            print(f"⚠️ Cohere Failed: {e}")
-
-    # 4. Fallback to Hugging Face
-    if HF_TOKEN:
-        try:
-            client = InferenceClient(token=HF_TOKEN)
-            # using Mistral 7B as a reliable general model
-            response = client.text_generation(
-                full_prompt, 
-                model="mistralai/Mistral-7B-Instruct-v0.3", 
-                max_new_tokens=2000
-            )
-            return response
-        except Exception as e:
-            print(f"⚠️ Hugging Face Failed: {e}")
 
     return "❌ Error: All LLM attempts failed. Please check your API keys."
