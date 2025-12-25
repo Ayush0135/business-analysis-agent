@@ -1,0 +1,23 @@
+# Environment Variables
+.env
+.venv
+venv/
+__pycache__/
+*.pyc
+*.DS_Store
+
+# Database
+instance/
+*.db
+*.sqlite3
+
+# Generated Reports (Keep directory structure but ignore files)
+static/reports/*
+!static/reports/.gitkeep
+Strategy_Report_*.md
+Strategy_Report_*.pdf
+Strategy_Report_*.pptx
+
+# IDE settings
+.vscode/
+.idea/

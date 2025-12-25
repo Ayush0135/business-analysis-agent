@@ -1,0 +1,14 @@
+google-generativeai
+groq
+python-dotenv
+requests
+reportlab
+python-pptx
+ddgs
+beautifulsoup4
+markdown
+streamlit
+flask
+Flask-SQLAlchemy
+cohere
+huggingface_hub

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Strategy Agent</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-robot"></i> StrategyAI</h2>
+            </div>
+
+            <div class="nav-section">
+                <h3>New Analysis</h3>
+                <div class="input-group">
+                    <label>Business Idea</label>
+                    <input type="text" id="idea" placeholder="e.g. AI Legal Assistant">
+                </div>
+
+                <div class="input-group">
+                    <label>Industry</label>
+                    <input type="text" id="industry" placeholder="e.g. Legal Tech">
+                </div>
+
+                <div class="input-group">
+                    <label>Region</label>
+                    <input type="text" id="region" placeholder="e.g. USA">
+                </div>
+
+                <button onclick="startAnalysis()" id="runBtn"><i class="fas fa-bolt"></i> Generate Report</button>
+
+                <div class="status-box" id="statusBox">
+                    <p>Status: <span id="statusText">Ready</span></p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <div id="downloads" class="hidden bounce-in">
+                    <h3><i class="fas fa-download"></i> Downloads</h3>
+                    <a id="dl-md" class="dl-btn" href="#" download><i class="fab fa-markdown"></i> Markdown Report</a>
+                    <a id="dl-pdf" class="dl-btn" href="#" download><i class="fas fa-file-pdf"></i> PDF Document</a>
+                    <a id="dl-ppt" class="dl-btn" href="#" download><i class="fas fa-file-powerpoint"></i>
+                        PowerPoint</a>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <h3><i class="fas fa-history"></i> Recent Reports</h3>
+                <div id="historyList" class="history-list">
+                    <!-- History items will be injected here -->
+                    <div class="placeholder-text">Loading history...</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="header-left">
+                    <h1>Business Strategy Report</h1>
+                    <p id="report-subtitle">Real-time Multi-Agent Analysis Ecosystem</p>
+                </div>
+                <div class="header-right">
+                    <span class="badge">v1.1 Enterprise</span>
+                </div>
+            </header>
+
+            <div class="tabs">
+                <button class="tab-link active" onclick="openTab(event, 'Market')"><i class="fas fa-chart-line"></i>
+                    Market</button>
+                <button class="tab-link" onclick="openTab(event, 'Competitor')"><i class="fas fa-chess"></i>
+                    Competitors</button>
+                <button class="tab-link" onclick="openTab(event, 'Customer')"><i class="fas fa-users"></i>
+                    Customers</button>
+                <button class="tab-link" onclick="openTab(event, 'SWOT')"><i class="fas fa-shield-alt"></i>
+                    SWOT</button>
+                <button class="tab-link" onclick="openTab(event, 'Financial')"><i class="fas fa-coins"></i>
+                    Financials</button>
+                <button class="tab-link" onclick="openTab(event, 'Risk')"><i class="fas fa-exclamation-triangle"></i>
+                    Risks</button>
+                <button class="tab-link" onclick="openTab(event, 'Strategy')"><i class="fas fa-bullseye"></i>
+                    Strategy</button>
+            </div>
+
+            <div class="content-area">
+                <div id="Market" class="tab-content active">
+                    <div class="empty-state">
+                        <i class="fas fa-search-dollar"></i>
+                        <h3>Market Research Agent</h3>
+                        <p>Waiting to analyze market trends, size, and growth...</p>
+                    </div>
+                </div>
+                <div id="Competitor" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+                <div id="Customer" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+                <div id="SWOT" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+                <div id="Financial" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+                <div id="Risk" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+                <div id="Strategy" class="tab-content">
+                    <div class="placeholder">Waiting for analysis...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+
+</html>
