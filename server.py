@@ -112,16 +112,23 @@ def stream_analysis():
     idea = request.args.get('idea')
     industry = request.args.get('industry')
     region = request.args.get('region')
-
+    
+    # Validation
     if not idea or not industry or not region:
-        return Response("data: Error: Missing fields\n\n", mimetype='text/event-stream')
+        return Response("data: " + json.dumps({'name': 'Error', 'status': 'Error: Missing fields'}) + "\n\n", mimetype='text/event-stream')
+
+    # Check for API Keys inside the route to give clear error if missing
+    from utils.llm import GROQ_API_KEY, GEMINI_API_KEY
+    if not GROQ_API_KEY and not GEMINI_API_KEY:
+         return Response("data: " + json.dumps({'name': 'Error', 'status': 'Error: Server Missing API Keys. Please configure Vercel Envs.'}) + "\n\n", mimetype='text/event-stream')
 
     def generate():
-        with app.app_context(): # Need app context for DB operations if we were writing immediately, but we write at end
-            results = {}
-            
-            # 1. Market Research
-            yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'running'})}\n\n"
+        try:
+            with app.app_context():
+                results = {}
+                
+                # 1. Market Research
+                yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'running'})}\n\n"
             market_res = market_research.run(idea, industry, region)
             results['Market Research'] = market_res
             yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'done', 'content': market_res})}\n\n"
@@ -195,9 +202,9 @@ def stream_analysis():
             db.session.add(new_analysis)
             db.session.commit()
             
-            yield f"data: {json.dumps({'step': 8, 'name': 'Complete', 'status': 'complete', 'files': {'md': md_path, 'pdf': pdf_path, 'ppt': ppt_path}})}\n\n"
 
-    return Response(generate(), mimetype='text/event-stream')
+        except Exception as e:
+            yield f"data: {json.dumps({'step': 0, 'name': 'Error', 'status': f'Critical Error: {str(e)}'})}\n\n"
 
 if __name__ == '__main__':
     # Ensure static exists for reports
