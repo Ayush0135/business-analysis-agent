@@ -4,7 +4,7 @@
 
 This detailed AI system takes a simple business idea and autonomously performs deep market research, competitor analysis, financial estimation, and strategic planning using a swarm of 7 specialized AI agents.
 
-![Dashboard Preview](https://i.imgur.com/8Q0Q0Q0.png) **(Replace with actual screenshot if available)*
+
 
 ---
 
@@ -124,4 +124,4 @@ Each agent performs specific web searches, gathers context, and passes its findi
 ---
 
 ## 🛡️ License
-This project is open-source and available under the **MIT License**.
+This project is open-source and available under the **Apache-2.0 License**.
