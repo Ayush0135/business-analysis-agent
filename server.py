@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, jsonify
+from flask import Flask, render_template, request, Response, jsonify, stream_with_context
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
@@ -124,11 +124,10 @@ def stream_analysis():
 
     def generate():
         try:
-            with app.app_context():
-                results = {}
-                
-                # 1. Market Research
-                yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'running'})}\n\n"
+            results = {}
+            
+            # 1. Market Research
+            yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'running'})}\n\n"
             market_res = market_research.run(idea, industry, region)
             results['Market Research'] = market_res
             yield f"data: {json.dumps({'step': 1, 'name': 'Market Research', 'status': 'done', 'content': market_res})}\n\n"
@@ -205,6 +204,8 @@ def stream_analysis():
 
         except Exception as e:
             yield f"data: {json.dumps({'step': 0, 'name': 'Error', 'status': f'Critical Error: {str(e)}'})}\n\n"
+
+    return Response(stream_with_context(generate()), mimetype='text/event-stream')
 
 if __name__ == '__main__':
     # Ensure static exists for reports
